@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ImageCombiner.App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ImageCombiner.App.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <Grid ShowGridLines="True" RowDefinitions="1*,1*">
+
+      <Grid Grid.Row="0" ShowGridLines="true" RowDefinitions="1*,1*,1*">
+          <Label Name="TitleLabel" Grid.Row="0" Content="Please select images to combine!" VerticalAlignment="Center"/>
+          <Button Name="ImageSelectorButton" Grid.Row="1" Content="Select images..." Click="ImageSelectorButton_OnClick"/>
+          <ListBox Name="ImageListBox" Grid.Row="2" ItemsSource="{Binding FilePickerResult.FileNames, Mode=OneWay}"/>
+      </Grid>
+      
+      <Grid Grid.Row="1" ShowGridLines="true" RowDefinitions="1*,1*,1*">
+          <Label Name="SaveTooltipLabel" Grid.Row="0" Content="Please select result file location!" VerticalAlignment="Center"/>
+          <Button Name="ResultSaveButton" Grid.Row="1" Content="Select result destination..." IsEnabled="{Binding InputSelected}" Click="ResultSaveButton_OnClick"/>
+          <Grid Grid.Row="2" ShowGridLines="True" ColumnDefinitions="1*,1*">
+              <Button Name="CombineButton" Grid.Column="0" Content="Combine" IsEnabled="{Binding OutputSelected}" Click="CombineButton_OnClick"/>
+          </Grid>
+      </Grid>
+  </Grid>
+</UserControl>
