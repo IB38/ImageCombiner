@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C04FF344-771E-4BF4-AE55-0C00FAE24666}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6AF4BDDD-0637-40EB-8F6D-EC0B41AFB82C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCombiner.Core", "src\ImageCombiner.Core\ImageCombiner.Core.csproj", "{EE6FAA3B-023D-4B38-85F6-DD1405366A25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCombiner.App", "src\ImageCombiner.App\ImageCombiner.App\ImageCombiner.App.csproj", "{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCombiner.App.Desktop", "src\ImageCombiner.App\ImageCombiner.App.Desktop\ImageCombiner.App.Desktop.csproj", "{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCombiner.App.Browser", "src\ImageCombiner.App\ImageCombiner.App.Browser\ImageCombiner.App.Browser.csproj", "{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE6FAA3B-023D-4B38-85F6-DD1405366A25} = {6AF4BDDD-0637-40EB-8F6D-EC0B41AFB82C}
+		{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1} = {6AF4BDDD-0637-40EB-8F6D-EC0B41AFB82C}
+		{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89} = {6AF4BDDD-0637-40EB-8F6D-EC0B41AFB82C}
+		{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9} = {6AF4BDDD-0637-40EB-8F6D-EC0B41AFB82C}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE6FAA3B-023D-4B38-85F6-DD1405366A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6FAA3B-023D-4B38-85F6-DD1405366A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6FAA3B-023D-4B38-85F6-DD1405366A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6FAA3B-023D-4B38-85F6-DD1405366A25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E77AB5-B575-4ABB-B87C-14AC6A80DEA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4187CD1F-A7AF-4539-9640-9FA5DFC8DF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E483B41-FBFF-4220-8A6E-3F4D0A3D2EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
