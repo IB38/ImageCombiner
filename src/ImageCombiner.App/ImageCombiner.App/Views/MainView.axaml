@@ -12,12 +12,12 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <Grid ShowGridLines="True" RowDefinitions="1*,1*">
+  <Grid ShowGridLines="True" RowDefinitions="2*,1*">
 
-      <Grid Grid.Row="0" ShowGridLines="true" RowDefinitions="1*,1*,1*">
+      <Grid Grid.Row="0" ShowGridLines="true" RowDefinitions="1*,1*,3*">
           <Label Name="TitleLabel" Grid.Row="0" Content="Please select images to combine!" VerticalAlignment="Center"/>
           <Button Name="ImageSelectorButton" Grid.Row="1" Content="Select images..." Click="ImageSelectorButton_OnClick"/>
-          <ListBox Name="ImageListBox" Grid.Row="2" ItemsSource="{Binding FilePickerResult.FileNames, Mode=OneWay}"/>
+          <ListBox Name="ImageListBox" Grid.Row="2" ItemsSource="{Binding InputFileNames, Mode=OneWay}"/>
       </Grid>
       
       <Grid Grid.Row="1" ShowGridLines="true" RowDefinitions="1*,1*,1*">

@@ -1,5 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using Avalonia.Platform.Storage;
+using DynamicData;
+using ImageCombiner.Core.Models;
 using ReactiveUI;
 
 namespace ImageCombiner.App.ViewModels;
@@ -18,28 +22,61 @@ public class MainViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _outputSelected, value);
     }
     
-    public FilePickerResult FilePickerResult { get; }
+    public ObservableCollection<string> InputFileNames {        
+        get => _inputFileNames;
+        set => this.RaiseAndSetIfChanged(ref _inputFileNames, value);
+    }
 
-    public Stream? OutputStream
+    public string? OutputFileName
     {
-        get => _outputStream;
+        get => _outputFileName;
+        set => this.RaiseAndSetIfChanged(ref _outputFileName, value);
+    }
+
+    public DisposableList<IStorageFile> InputFiles
+    {
+        get => _inputFiles;
         set
         {
-            var oldStream = _outputStream;
-            this.RaiseAndSetIfChanged(ref _outputStream, value);
-            InputSelected = value != null;
-            oldStream?.Dispose();
+            var oldFiles = _inputFiles;
+            this.RaiseAndSetIfChanged(ref _inputFiles, value);
+            oldFiles?.Dispose();
+            
+            UpdateInputProperties();
         }
     }
 
-    private Stream? _outputStream;
+    public IStorageFile? OutputFile
+    {
+        get => _outputFile;
+        set
+        {
+            var oldFile = _outputFile;
+            this.RaiseAndSetIfChanged(ref _outputFile, value);
+            oldFile?.Dispose();
+            
+            UpdateOutputProperties();
+        }
+    }
+
+    private DisposableList<IStorageFile> _inputFiles = new();
+    private IStorageFile? _outputFile;
+
+    private ObservableCollection<string> _inputFileNames = new();
+    private string? _outputFileName;
     private bool _inputSelected;
     private bool _outputSelected;
 
-    public MainViewModel()
+    private void UpdateInputProperties()
     {
-        FilePickerResult = new FilePickerResult();
-        OutputStream = default;
-        
+        InputSelected = _inputFiles.Any();
+        InputFileNames.Clear();
+        InputFileNames.AddRange(_inputFiles.Select(f => f.Name));
+    }
+    
+    private void UpdateOutputProperties()
+    {
+        OutputSelected = _outputFile != null;
+        OutputFileName = _outputFile?.Name;
     }
 }

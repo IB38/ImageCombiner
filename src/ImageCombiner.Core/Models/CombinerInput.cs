@@ -4,18 +4,15 @@ namespace ImageCombiner.Core.Models;
 
 public class CombinerInput
 {
-    public string[] InputImagePaths { get; }
-    public string OutputImagePath { get; }
+    public IFileProvider FileProvider { get; }
 
     public CombinationType CombinationType { get; init; } = CombinationType.Vertical;
     public FramingOptions? FramingOptions { get; init; } = null;
 
-    public CombinerInput(string[] inputImagePaths, string outputImagePath)
+    public CombinerInput(IFileProvider fileProvider)
     {
-        Code.NotNullNorEmptyAndItemNotNull(inputImagePaths, nameof(inputImagePaths));
-        Code.NotNullNorEmpty(outputImagePath, nameof(outputImagePath));
+        Code.NotNull(fileProvider, nameof(fileProvider));
         
-        InputImagePaths = inputImagePaths;
-        OutputImagePath = outputImagePath;
+        FileProvider = fileProvider;
     }
 }
