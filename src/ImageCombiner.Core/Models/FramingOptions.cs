@@ -2,10 +2,10 @@
 
 public class FramingOptions
 {
-    public float Thickness { get; }
+    public int Thickness { get; }
     public FrameColor Color { get; }
 
-    public FramingOptions(float thickness, FrameColor color)
+    public FramingOptions(int thickness, FrameColor color)
     {
         Thickness = thickness;
         Color = color;

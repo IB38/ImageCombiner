@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ImageCombiner.App.ViewModels"
+             xmlns:storage="clr-namespace:Avalonia.Platform.Storage;assembly=Avalonia.Base"
+             xmlns:infrastructure="clr-namespace:ImageCombiner.App.Infrastructure"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ImageCombiner.App.Controls.FileListControl"
+             x:DataType="vm:FileListControlViewModel"
+             >
+    
+    <UserControl.Resources>
+        <infrastructure:CollectionNotEmptyConverter x:Key="CollectionNotEmptyConverterInstance"/>
+    </UserControl.Resources>
+    
+    <Grid ShowGridLines="true" ColumnDefinitions="5*,1*">
+      <ListBox Name="FileListBox" 
+               Grid.Column="0" 
+               ItemsSource="{Binding Files, Mode=TwoWay}">
+          <ListBox.ItemTemplate>
+              <DataTemplate DataType="storage:IStorageFile">
+                  <TextBlock Text="{Binding Name}"/>
+              </DataTemplate>
+          </ListBox.ItemTemplate>
+      </ListBox>
+        
+      <Label Grid.Column="0" 
+             Name="HintLabel" IsVisible="{Binding !HasFiles}" 
+             Content="Use buttons on the right to add files" 
+             FontFamily="Comic Sans" FontStyle="Italic" FontSize="16"
+             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+      <Grid Grid.Column="1" RowDefinitions="1*,4*,1*">
+          <Grid Grid.Row="1" RowDefinitions="1*,1*,1*,1*" >
+              <Button Name="AddButton" Grid.Row="0" Content="Add" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="AddButton_OnClick"/>
+              
+              <SplitButton Name="RemoveButton" Grid.Row="1" Content="Remove" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="RemoveButton_OnClick">
+                  <SplitButton.Flyout>
+                      <MenuFlyout Placement="Bottom">
+                          <MenuItem Name="ResetButton" Header="Reset" IsEnabled="{Binding HasFiles}" Click="ResetButton_OnClick"/>
+                      </MenuFlyout>
+                  </SplitButton.Flyout>
+              </SplitButton>
+              
+              <Button Name="MoveUpButton" Grid.Row="2" Content="∧" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveUpButton_OnClick"/>
+              <Button Name="MoveDownButton" Grid.Row="3" Content="v" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveDownButton_OnClick"/>
+          </Grid>
+      </Grid>
+    </Grid>
+</UserControl>

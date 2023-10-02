@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ImageCombiner.App.ViewModels"
+             xmlns:controls="clr-namespace:ImageCombiner.App.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ImageCombiner.App.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -12,20 +13,10 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <Grid ShowGridLines="True" RowDefinitions="2*,1*">
+  <Grid ShowGridLines="True" RowDefinitions="0.25*, 3*,1*,1*" Margin="10">
 
-      <Grid Grid.Row="0" ShowGridLines="true" RowDefinitions="1*,1*,3*">
-          <Label Name="TitleLabel" Grid.Row="0" Content="Please select images to combine!" VerticalAlignment="Center"/>
-          <Button Name="ImageSelectorButton" Grid.Row="1" Content="Select images..." Click="ImageSelectorButton_OnClick"/>
-          <ListBox Name="ImageListBox" Grid.Row="2" ItemsSource="{Binding InputFileNames, Mode=OneWay}"/>
-      </Grid>
-      
-      <Grid Grid.Row="1" ShowGridLines="true" RowDefinitions="1*,1*,1*">
-          <Label Name="SaveTooltipLabel" Grid.Row="0" Content="Please select result file location!" VerticalAlignment="Center"/>
-          <Button Name="ResultSaveButton" Grid.Row="1" Content="Select result destination..." IsEnabled="{Binding InputSelected}" Click="ResultSaveButton_OnClick"/>
-          <Grid Grid.Row="2" ShowGridLines="True" ColumnDefinitions="1*,1*">
-              <Button Name="CombineButton" Grid.Column="0" Content="Combine" IsEnabled="{Binding OutputSelected}" Click="CombineButton_OnClick"/>
-          </Grid>
-      </Grid>
+      <controls:FileListControl Name="FileListControl" Grid.Row="1"/>
+
+      <Button Name="CombineButton" Grid.Row="3" Content="Save as..." IsEnabled="{Binding #FileListControl.HasFiles}" Click="CombineButton_OnClick"/>
   </Grid>
 </UserControl>

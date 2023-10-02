@@ -1,6 +1,8 @@
 ﻿using CodeJam;
 using CodeJam.Threading;
+using ImageCombiner.Core.Extensions;
 using ImageCombiner.Core.Models;
+using SixLabors.ImageSharp.Drawing.Processing;
 
 namespace ImageCombiner.Core;
 
@@ -24,6 +26,8 @@ public class ImageCombiner
         var maxWidth = imagesMetadata.Max(meta => meta.Width);
         var maxHeight = imagesMetadata.Max(meta => meta.Height);
         var combinedHeight = imagesMetadata.Sum(meta => meta.Height);
+        var framingOptions = input.FramingOptions;
+        var frameOffset = framingOptions?.Thickness ?? 0;
 
         using var outputImage = new Image<Rgba32>(maxWidth, combinedHeight);
 
@@ -36,8 +40,20 @@ public class ImageCombiner
             using var img = await Image.LoadAsync(imgStream, ct);
             var (width, height) = (img.Width, img.Height);
             
-            outputImage.Mutate(o => o.DrawImage(img, new Point(0, heightOffset), 1f));
-            heightOffset += height;
+            outputImage.Mutate(
+                o =>
+                    // TODO: Implement CombinationType
+                    // TODO: Implement FramingOptions
+                {
+                    if (framingOptions != null && frameOffset > 0)
+                    {
+                        var rect = new RectangleF(0, heightOffset, width + 2 * frameOffset, height + 2 * frameOffset);
+                        o.Fill(framingOptions.Color.ToImageSharpColor(), rect);
+                        heightOffset += frameOffset;
+                    }
+                    o.DrawImage(img, new Point(frameOffset, heightOffset), 1f);
+                });
+            heightOffset += height + frameOffset;
         }
         
         await outputImage.SaveAsJpegAsync(outputStream, ct);

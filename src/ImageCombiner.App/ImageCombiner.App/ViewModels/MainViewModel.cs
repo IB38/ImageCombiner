@@ -1,8 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using DynamicData;
+using ImageCombiner.App.Infrastructure;
 using ImageCombiner.Core.Models;
 using ReactiveUI;
 
@@ -10,73 +15,20 @@ namespace ImageCombiner.App.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    public bool InputSelected
-    {
-        get => _inputSelected;
-        set => this.RaiseAndSetIfChanged(ref _inputSelected, value);
-    }
-    
-    public bool OutputSelected
-    {
-        get => _outputSelected;
-        set => this.RaiseAndSetIfChanged(ref _outputSelected, value);
-    }
-    
-    public ObservableCollection<string> InputFileNames {        
-        get => _inputFileNames;
-        set => this.RaiseAndSetIfChanged(ref _inputFileNames, value);
-    }
+    private readonly Core.ImageCombiner _combiner = new();
 
-    public string? OutputFileName
+    public async Task CombineAsync(IReadOnlyList<IStorageFile> inputFiles, 
+        IStorageFile outputFile, 
+        CancellationToken ct = default)
     {
-        get => _outputFileName;
-        set => this.RaiseAndSetIfChanged(ref _outputFileName, value);
-    }
-
-    public DisposableList<IStorageFile> InputFiles
-    {
-        get => _inputFiles;
-        set
+        if (inputFiles.Count <= 0)
         {
-            var oldFiles = _inputFiles;
-            this.RaiseAndSetIfChanged(ref _inputFiles, value);
-            oldFiles?.Dispose();
-            
-            UpdateInputProperties();
+            Console.WriteLine("No input files to combine");
+            return;
         }
-    }
 
-    public IStorageFile? OutputFile
-    {
-        get => _outputFile;
-        set
-        {
-            var oldFile = _outputFile;
-            this.RaiseAndSetIfChanged(ref _outputFile, value);
-            oldFile?.Dispose();
-            
-            UpdateOutputProperties();
-        }
-    }
+        var combinerInput = new CombinerInput(new AvaloniaFileProvider(inputFiles, outputFile));
 
-    private DisposableList<IStorageFile> _inputFiles = new();
-    private IStorageFile? _outputFile;
-
-    private ObservableCollection<string> _inputFileNames = new();
-    private string? _outputFileName;
-    private bool _inputSelected;
-    private bool _outputSelected;
-
-    private void UpdateInputProperties()
-    {
-        InputSelected = _inputFiles.Any();
-        InputFileNames.Clear();
-        InputFileNames.AddRange(_inputFiles.Select(f => f.Name));
-    }
-    
-    private void UpdateOutputProperties()
-    {
-        OutputSelected = _outputFile != null;
-        OutputFileName = _outputFile?.Name;
+        await _combiner.CombineAsync(combinerInput, ct);
     }
 }

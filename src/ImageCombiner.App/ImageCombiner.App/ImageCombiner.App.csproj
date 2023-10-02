@@ -22,4 +22,15 @@
     <ItemGroup>
       <ProjectReference Include="..\..\ImageCombiner.Core\ImageCombiner.Core.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Controls\FileListControl.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\FileListControl.axaml.cs">
+        <DependentUpon>FileListControl.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

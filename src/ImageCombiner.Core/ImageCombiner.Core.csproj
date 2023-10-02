@@ -9,7 +9,9 @@
     <ItemGroup>
         <PackageReference Include="CodeJam" Version="4.1.0" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.0.2" />
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.0.0" />
     </ItemGroup>
+
 
 
 </Project>
