@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Avalonia.Input;
 using CodeJam;
 
-namespace ImageCombiner.App;
+namespace ImageCombiner.App.Infrastructure;
 
 public static class ElementHelper
 {

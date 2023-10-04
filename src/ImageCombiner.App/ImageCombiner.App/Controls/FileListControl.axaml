@@ -9,11 +9,6 @@
              x:Class="ImageCombiner.App.Controls.FileListControl"
              x:DataType="vm:FileListControlViewModel"
              >
-    
-    <UserControl.Resources>
-        <infrastructure:CollectionNotEmptyConverter x:Key="CollectionNotEmptyConverterInstance"/>
-    </UserControl.Resources>
-    
     <Grid ShowGridLines="true" ColumnDefinitions="5*,1*">
       <ListBox Name="FileListBox" 
                Grid.Column="0" 

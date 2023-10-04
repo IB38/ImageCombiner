@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using DynamicData;
+using ImageCombiner.App.Infrastructure;
 using ImageCombiner.App.ViewModels;
 using ImageCombiner.Core.Models;
 using ReactiveUI;

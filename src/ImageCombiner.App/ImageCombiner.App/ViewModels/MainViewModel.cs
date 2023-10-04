@@ -19,6 +19,7 @@ public class MainViewModel : ViewModelBase
 
     public async Task CombineAsync(IReadOnlyList<IStorageFile> inputFiles, 
         IStorageFile outputFile, 
+        FramingOptions? fo = null,
         CancellationToken ct = default)
     {
         if (inputFiles.Count <= 0)
@@ -27,7 +28,10 @@ public class MainViewModel : ViewModelBase
             return;
         }
 
-        var combinerInput = new CombinerInput(new AvaloniaFileProvider(inputFiles, outputFile));
+        var combinerInput = new CombinerInput(new AvaloniaFileProvider(inputFiles, outputFile))
+        {
+            FramingOptions = fo
+        };
 
         await _combiner.CombineAsync(combinerInput, ct);
     }

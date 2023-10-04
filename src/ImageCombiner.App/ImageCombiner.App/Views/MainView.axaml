@@ -13,9 +13,10 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <Grid ShowGridLines="True" RowDefinitions="0.25*, 3*,1*,1*" Margin="10">
+  <Grid ShowGridLines="True" RowDefinitions="0.25*, 3*,1.25*,1*" Margin="10">
 
       <controls:FileListControl Name="FileListControl" Grid.Row="1"/>
+      <controls:FramingOptionsControl Name="FramingOptionsControl" Grid.Row="2" Margin="5"/>
 
       <Button Name="CombineButton" Grid.Row="3" Content="Save as..." IsEnabled="{Binding #FileListControl.HasFiles}" Click="CombineButton_OnClick"/>
   </Grid>
