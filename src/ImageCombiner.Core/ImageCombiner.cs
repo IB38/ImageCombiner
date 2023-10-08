@@ -21,6 +21,7 @@ public class ImageCombiner
         await using var outputStream = await getOutputStream;
         Code.NotNull(outputStream, nameof(outputStream));
         
+        // TODO: Copy images to temp file, reading input stream twice doesn't work on WebAssembly 
         var imagesMetadata = await inputStreams.Select(p => Image.IdentifyAsync(p, ct)).WhenAll();
 
         // TODO: Implement CombinationType

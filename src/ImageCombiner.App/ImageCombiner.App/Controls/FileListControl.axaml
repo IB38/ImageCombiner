@@ -26,8 +26,8 @@
              FontFamily="Comic Sans" FontStyle="Italic" FontSize="16"
              HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
-      <Grid Grid.Column="1" RowDefinitions="1*,4*,1*">
-          <Grid Grid.Row="1" RowDefinitions="1*,1*,1*,1*" >
+      <Grid Grid.Column="1" RowDefinitions="1*,5*,1*">
+          <Grid Grid.Row="1" RowDefinitions="1*,1*,1*,1*,1*" >
               <Button Name="AddButton" Grid.Row="0" Content="Add" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="AddButton_OnClick"/>
               
               <SplitButton Name="RemoveButton" Grid.Row="1" Content="Remove" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="RemoveButton_OnClick">
@@ -40,6 +40,7 @@
               
               <Button Name="MoveUpButton" Grid.Row="2" Content="∧" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveUpButton_OnClick"/>
               <Button Name="MoveDownButton" Grid.Row="3" Content="v" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveDownButton_OnClick"/>
+              <Button Name="ReverseButton" Grid.Row="4" Content="Reverse" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="ReverseButton_OnClick"/>
           </Grid>
       </Grid>
     </Grid>

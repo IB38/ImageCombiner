@@ -159,4 +159,12 @@ public partial class FileListControl : UserControl
         return true;
 
     }
+
+    private void ReverseButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ElementHelper.WrapWithDisable(sender, () =>
+        {
+            ViewModel.ReverseFileOrder();
+        });
+    }
 }
