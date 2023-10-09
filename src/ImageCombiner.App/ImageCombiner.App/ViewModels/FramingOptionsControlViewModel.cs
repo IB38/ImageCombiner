@@ -9,8 +9,8 @@ namespace ImageCombiner.App.ViewModels;
 public class FramingOptionsControlViewModel : ViewModelBase
 {
     public List<EnumDisplayWrapper<FrameColor>> SelectableFrameColors { get; } = EnumDisplayWrapper<FrameColor>.WrapAllValues();
-    
-    public FrameColor? FrameColor
+
+    public FrameColor FrameColor
     {
         get => _frameColor;
         set => this.RaiseAndSetIfChanged(ref _frameColor, value);
@@ -23,11 +23,16 @@ public class FramingOptionsControlViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _frameThickness, value);
     }
 
-    private FrameColor? _frameColor;
+    private FrameColor _frameColor;
     private int _frameThickness;
+
+    public FramingOptionsControlViewModel()
+    {
+        FrameColor = FrameColor.Black;
+    }
 
     public FramingOptions BuildFramingOptions()
     {
-        return new FramingOptions(FrameThickness, FrameColor ?? Core.Models.FrameColor.Black);
+        return new FramingOptions(FrameThickness, FrameColor);
     }
 }

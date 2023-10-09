@@ -18,6 +18,6 @@ public partial class FramingOptionsControl : UserControl
     {
         InitializeComponent();
         DataContext = new FramingOptionsControlViewModel();
-        
+        FrameColorComboBox.SelectedIndex = 0;
     }
 }

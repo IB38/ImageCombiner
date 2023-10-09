@@ -7,6 +7,11 @@ using ReactiveUI;
 
 namespace ImageCombiner.App.Infrastructure;
 
+/// <summary>
+/// Enum wrapper for usage in UI elements with bindable <see cref="DisplayName"/> and <see cref="Value"/>.<br/> <br/>
+/// DisplayName uses <see cref="DisplayNameAttribute"/>, <see cref="DescriptionAttribute"/> or <see cref="object.ToString"/> value, whichever first is available.
+/// </summary>
+/// <typeparam name="TEnum">Type of wrapped enum.</typeparam>
 public class EnumDisplayWrapper<TEnum> : ReactiveObject where TEnum : struct, Enum
 {
     public string DisplayName
