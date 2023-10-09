@@ -38,8 +38,22 @@
                   </SplitButton.Flyout>
               </SplitButton>
               
-              <Button Name="MoveUpButton" Grid.Row="2" Content="∧" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveUpButton_OnClick"/>
-              <Button Name="MoveDownButton" Grid.Row="3" Content="v" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveDownButton_OnClick"/>
+              <SplitButton Name="MoveUpButton" Grid.Row="2" Content="∧" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveUpButton_OnClick">
+                  <SplitButton.Flyout>
+                      <MenuFlyout Placement="Bottom">
+                          <MenuItem Name="MoveTopButton" Header="Make first" IsEnabled="{Binding HasFiles}" Click="MoveTopButton_OnClick"/>
+                      </MenuFlyout>
+                  </SplitButton.Flyout>
+              </SplitButton>
+              
+              <SplitButton Name="MoveDownButton" Grid.Row="3" Content="v" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="MoveDownButton_OnClick">
+                  <SplitButton.Flyout>
+                      <MenuFlyout Placement="Bottom">
+                          <MenuItem Name="MoveBottomButton" Header="Make last" IsEnabled="{Binding HasFiles}" Click="MoveBottomButton_OnClick"/>
+                      </MenuFlyout>
+                  </SplitButton.Flyout>
+              </SplitButton>
+              
               <Button Name="ReverseButton" Grid.Row="4" Content="Reverse" IsEnabled="{Binding HasFiles}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="ReverseButton_OnClick"/>
           </Grid>
       </Grid>

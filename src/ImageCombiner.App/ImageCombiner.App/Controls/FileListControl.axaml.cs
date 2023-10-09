@@ -100,25 +100,7 @@ public partial class FileListControl : UserControl
     {
         ElementHelper.WrapWithDisable(sender, () =>
         {
-            if (ViewModel.Files.Count > 0)
-            {
-                IfValidFileSelected((int idx) =>
-                {
-                    if (idx > 0)
-                    {
-                        Console.WriteLine($"Moving file '{idx}' to position '{idx - 1}'");
-                        ViewModel.Files.Move(idx, idx - 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Can't move file '{idx}' up");
-                    }
-                });
-            }
-            else
-            {
-                Console.WriteLine("Can't move file, file collection is empty");
-            }
+            MoveSelectedListElem((idx) => idx - 1);
         });
     }
 
@@ -126,29 +108,26 @@ public partial class FileListControl : UserControl
     {
         ElementHelper.WrapWithDisable(sender, () =>
         {
-            if (ViewModel.Files.Count > 0)
-            {
-                IfValidFileSelected((int idx) =>
-                {
-                    if (idx < ViewModel.Files.Count - 1)
-                    {
-                        Console.WriteLine($"Moving file '{idx}' to position '{idx - 1}'");
-                        ViewModel.Files.Move(idx, idx + 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Can't move file '{idx}' down");
-                    }
-                });
-            }
-            else
-            {
-                Console.WriteLine("Can't move file, file collection is empty");
-            }
+            MoveSelectedListElem((idx) => idx + 1);
         });
     }
 
+    private void MoveTopButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ElementHelper.WrapWithDisable(sender, () =>
+        {
+            MoveSelectedListElem((idx) => 0);
+        });
+    }
 
+    private void MoveBottomButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ElementHelper.WrapWithDisable(sender, () =>
+        {
+            MoveSelectedListElem((idx) => ViewModel.Files.Count - 1);
+        });
+    }
+    
     private bool IfValidFileSelected(Action<int> functionBody)
     {
         var selectedIndex = FileListBox.SelectedIndex;
@@ -166,5 +145,30 @@ public partial class FileListControl : UserControl
         {
             ViewModel.ReverseFileOrder();
         });
+    }
+
+    private void MoveSelectedListElem(Func<int, int> newIdxFunc)
+    {
+        if (ViewModel.Files.Count > 0)
+        {
+            IfValidFileSelected((int idx) =>
+            {
+                var newIdx = newIdxFunc(idx);
+                if (newIdx < 0 || newIdx >= ViewModel.Files.Count)
+                {
+                    Console.WriteLine($"Can't move file to position '{newIdx}', index is out of bounds");
+                    return;
+                }
+                
+                Console.WriteLine($"Moving file '{idx}' to position '{newIdx}'...");
+                ViewModel.Files.Move(idx, newIdx);
+                // Keep the element selected
+                FileListBox.SelectedIndex = newIdx;
+            });
+        }
+        else
+        {
+            Console.WriteLine("Can't move file, file collection is empty");
+        }
     }
 }
