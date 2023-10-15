@@ -3,7 +3,7 @@
 /// <summary>
 /// Combiner behavior when input images have different resolution.
 /// </summary>
-public enum SizeMatchingStrategy
+public enum SizeMatchingType
 {
     /// <summary>
     /// Combine as is

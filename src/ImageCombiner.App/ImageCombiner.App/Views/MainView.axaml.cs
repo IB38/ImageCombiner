@@ -45,7 +45,11 @@ public partial class MainView : UserControl
                 return;
             }
 
-            await ViewModel.CombineAsync(inputFiles, outputFile, FramingOptionsControl.FramingOptions);
+            await ViewModel.CombineAsync(inputFiles, 
+                outputFile, 
+                CombinationTypeSelectorControl.SelectedCombinationType,
+                FramingOptionsControl.FramingOptions);
+            
             Console.WriteLine($"Saved combiner result to file '{outputFile.Name}'");
         });
     }

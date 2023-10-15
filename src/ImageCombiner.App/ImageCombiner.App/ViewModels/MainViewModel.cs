@@ -18,7 +18,8 @@ public class MainViewModel : ViewModelBase
     private readonly Core.ImageCombiner _combiner = new();
 
     public async Task CombineAsync(IReadOnlyList<IStorageFile> inputFiles, 
-        IStorageFile outputFile, 
+        IStorageFile outputFile,
+        CombinationType combinationType,
         FramingOptions? fo = null,
         CancellationToken ct = default)
     {
@@ -30,7 +31,8 @@ public class MainViewModel : ViewModelBase
 
         var combinerInput = new CombinerInput(new AvaloniaFileProvider(inputFiles, outputFile))
         {
-            FramingOptions = fo
+            FramingOptions = fo,
+            CombinationType = combinationType
         };
 
         await _combiner.CombineAsync(combinerInput, ct);

@@ -8,7 +8,7 @@ public class CombinerInput
 
     public CombinationType CombinationType { get; init; } = CombinationType.Vertical;
 
-    public SizeMatchingStrategy SizeMatchingStrategy { get; init; } = SizeMatchingStrategy.Disabled;
+    public SizeMatchingType SizeMatchingType { get; init; } = SizeMatchingType.Disabled;
     
     public FramingOptions? FramingOptions { get; init; } = null;
 

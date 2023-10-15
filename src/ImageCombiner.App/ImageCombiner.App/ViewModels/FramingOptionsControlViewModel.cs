@@ -10,29 +10,29 @@ public class FramingOptionsControlViewModel : ViewModelBase
 {
     public List<EnumDisplayWrapper<FrameColor>> SelectableFrameColors { get; } = EnumDisplayWrapper<FrameColor>.WrapAllValues();
 
-    public FrameColor FrameColor
+    public FrameColor? SelectedFrameColor
     {
-        get => _frameColor;
-        set => this.RaiseAndSetIfChanged(ref _frameColor, value);
+        get => _selectedFrameColor;
+        set => this.RaiseAndSetIfChanged(ref _selectedFrameColor, value);
     }
     
     [Range(0, 100)]
-    public int FrameThickness
+    public int SelectedFrameThickness
     {
-        get => _frameThickness;
-        set => this.RaiseAndSetIfChanged(ref _frameThickness, value);
+        get => _selectedFrameThickness;
+        set => this.RaiseAndSetIfChanged(ref _selectedFrameThickness, value);
     }
 
-    private FrameColor _frameColor;
-    private int _frameThickness;
+    private FrameColor? _selectedFrameColor;
+    private int _selectedFrameThickness;
 
     public FramingOptionsControlViewModel()
     {
-        FrameColor = FrameColor.Black;
+        SelectedFrameColor = FrameColor.Black;
     }
 
     public FramingOptions BuildFramingOptions()
     {
-        return new FramingOptions(FrameThickness, FrameColor);
+        return new FramingOptions(SelectedFrameThickness, SelectedFrameColor ?? FrameColor.Black);
     }
 }

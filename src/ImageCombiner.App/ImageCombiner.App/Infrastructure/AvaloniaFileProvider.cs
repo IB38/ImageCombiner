@@ -27,10 +27,31 @@ public sealed class AvaloniaFileProvider : IFileProvider
 
     public async Task<DisposableList<Stream>> GetInputStreamsAsync(CancellationToken ct = default)
     {
-        var inputStreams = await _inputFiles.Select(f => f.OpenReadAsync()).WhenAll();
+        using var inputStreams = (await _inputFiles.Select(f => f.OpenReadAsync()).WhenAll()).ToDisposableList();
 
-        return inputStreams.ToDisposableList();
+        var tempFileStreams = await inputStreams.Select(rawStream => CopyToTempFile(rawStream, ct)).WhenAll();
+
+        return tempFileStreams.ToDisposableList();
     }
 
     public Task<Stream> GetOutputStreamAsync(CancellationToken ct = default) => _outputFile.OpenWriteAsync();
+
+    // Web Avalonia streams cannot be read twice or be rewound
+    // So we'll make temp copies of input files
+    private static async Task<Stream> CopyToTempFile(Stream inputFile, CancellationToken ct = default)
+    {
+        var tempFileStream = new FileStream(GetTempFileName(), 
+            FileMode.CreateNew, 
+            FileAccess.ReadWrite, 
+            FileShare.Read, 
+            4096, 
+            FileOptions.DeleteOnClose);
+        
+        await inputFile.CopyToAsync(tempFileStream, ct);
+        tempFileStream.Seek(0, SeekOrigin.Begin);
+
+        return tempFileStream;
+        
+        string GetTempFileName() => Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.image-combiner.tmp");
+    }
 }
