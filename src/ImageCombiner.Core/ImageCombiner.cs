@@ -1,7 +1,9 @@
 ﻿using CodeJam;
+using CodeJam.Collections;
 using CodeJam.Threading;
 using ImageCombiner.Core.Extensions;
 using ImageCombiner.Core.Infrastructure;
+using ImageCombiner.Core.Math;
 using ImageCombiner.Core.Models;
 using SixLabors.ImageSharp.Drawing.Processing;
 
@@ -22,7 +24,11 @@ public class ImageCombiner
         await using var outputStream = await getOutputStream;
         Code.NotNull(outputStream, nameof(outputStream));
         
-        var imagesMetadata = await inputStreams.Select(p => Image.IdentifyAsync(p, ct)).WhenAll();
+        // Preprocessor "virtually" resizes images by changing metadata used in calculations
+        var imagesMetadata = await SizeMatchingPreprocessor.LoadMetadataAsync(inputStreams, 
+            input.CombinationType, 
+            input.SizeMatchingType, 
+            ct);
         
         var ctx = new CombinerContext(input, imagesMetadata);
         var combinationStrategy = CombinationStrategyFactory.Build(ctx);
@@ -30,12 +36,16 @@ public class ImageCombiner
         
         using var outputImage = new Image<Rgba32>(outputImgSize.Width, outputImgSize.Height);
         
-        foreach (var imgStream in inputStreams)
+        foreach (var (i, imgStream) in inputStreams.WithIndex())
         {
             if (imgStream.CanSeek)
                 imgStream.Seek(0, SeekOrigin.Begin);
             
             using var img = await Image.LoadAsync(imgStream, ct);
+            // Get previously preprocessed metadata and do the real resizing
+            var meta = imagesMetadata[i];
+            img.Mutate(o => o.Resize(meta.Size));
+            
             var (width, height) = (img.Width, img.Height);
             
             outputImage.Mutate(

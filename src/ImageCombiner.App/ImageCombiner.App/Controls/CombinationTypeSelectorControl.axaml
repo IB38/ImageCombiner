@@ -7,10 +7,23 @@
              x:Class="ImageCombiner.App.Controls.CombinationTypeSelectorControl"
              x:DataType="viewModels:CombinationTypeSelectorViewModel"
              >
-    <Grid RowDefinitions="1*,1*,1*">
-        <Label Grid.Row="0" Name="CombinationTypeLabel" Content="Combination type" FontWeight="Bold"/>
-        <RadioButton Grid.Row="1" Name="VerticalButton" GroupName="CombinationTypeButtons" Content="Vertical" IsDefault="True" IsChecked="True" Click="VerticalButton_OnClick"/>
+    <Grid RowDefinitions="1*,1*,1*" ColumnDefinitions="Auto, Auto">
+        <Label Grid.Row="0" Grid.Column="0" Name="CombinationTypeLabel" Content="Combination type" FontWeight="Bold"/>
+        <Button Grid.Row="0" Grid.Column="1" Name="HelpButton" Content="?">
+            <Button.Flyout>
+                <Flyout ShowMode="TransientWithDismissOnPointerMoveAway">
+                    <TextBlock>
+                        <Run Text="Vertical - Images are arranged from top to bottom"/>
+                        <LineBreak/>
+                        
+                        <Run Text="Horizontal - Images are arranged from left to right"/>
+                    </TextBlock>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
         
-        <RadioButton Grid.Row="2" Name="HorizontalButton" GroupName="CombinationTypeButtons" Content="Horizontal" Click="HorizontalButton_OnClick"/>
+        <RadioButton Grid.Row="1" Grid.Column="0" Name="VerticalButton" GroupName="CombinationTypeButtons" Content="Vertical" IsDefault="True" IsChecked="True" Click="VerticalButton_OnClick"/>
+        
+        <RadioButton Grid.Row="2" Grid.Column="0" Name="HorizontalButton" GroupName="CombinationTypeButtons" Content="Horizontal" Click="HorizontalButton_OnClick"/>
     </Grid>
 </UserControl>

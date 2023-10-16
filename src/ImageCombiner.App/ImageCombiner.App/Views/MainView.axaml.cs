@@ -48,6 +48,7 @@ public partial class MainView : UserControl
             await ViewModel.CombineAsync(inputFiles, 
                 outputFile, 
                 CombinationTypeSelectorControl.SelectedCombinationType,
+                SizeMatchingTypeSelectorControl.SelectedSizeMatchingType,
                 FramingOptionsControl.FramingOptions);
             
             Console.WriteLine($"Saved combiner result to file '{outputFile.Name}'");

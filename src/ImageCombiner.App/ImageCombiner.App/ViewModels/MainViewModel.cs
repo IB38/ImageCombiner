@@ -20,6 +20,7 @@ public class MainViewModel : ViewModelBase
     public async Task CombineAsync(IReadOnlyList<IStorageFile> inputFiles, 
         IStorageFile outputFile,
         CombinationType combinationType,
+        SizeMatchingType sizeMatchingType,
         FramingOptions? fo = null,
         CancellationToken ct = default)
     {
@@ -32,7 +33,8 @@ public class MainViewModel : ViewModelBase
         var combinerInput = new CombinerInput(new AvaloniaFileProvider(inputFiles, outputFile))
         {
             FramingOptions = fo,
-            CombinationType = combinationType
+            CombinationType = combinationType,
+            SizeMatchingType = sizeMatchingType
         };
 
         await _combiner.CombineAsync(combinerInput, ct);

@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ImageCombiner.App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="125"
+             x:Class="ImageCombiner.App.Controls.SizeMatchingTypeSelectorControl"
+             x:DataType="viewModels:SizeMatchingTypeSelectorViewModel"
+>
+    <Grid RowDefinitions="1*,1*,1*,1*" ColumnDefinitions="Auto, Auto">
+        <Label Grid.Row="0" Grid.Column="0" Name="SizeMatchingTypeLabel" Content="Size matching" FontWeight="Bold"/>
+        <Button Grid.Row="0" Grid.Column="1" Name="HelpButton" Content="?">
+            <Button.Flyout>
+                <Flyout ShowMode="TransientWithDismissOnPointerMoveAway">
+                    <TextBlock>
+                        <Run Text="Disabled - Size matching is disabled, images are combined as-is"/>
+                        <LineBreak/>
+                        
+                        <Run Text="Stretch - Images are stretched to match the biggest image"/>
+                        <LineBreak/>
+                        
+                        <Run Text="Shrink - Images are shrunk to match the smallest image"/>
+                    </TextBlock>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+        
+        <RadioButton Grid.Row="1" Grid.Column="0" Name="DisabledButton" GroupName="SizeMatchingTypeButtons" Content="Disabled" IsDefault="True" IsChecked="True" Click="DisabledButton_OnClick"/>
+        <RadioButton Grid.Row="2" Grid.Column="0" Name="StretchButton" GroupName="SizeMatchingTypeButtons" Content="Stretch" Click="StretchButton_OnClick"/>
+        <RadioButton Grid.Row="3" Grid.Column="0" Name="ShrinkButton" GroupName="SizeMatchingTypeButtons" Content="Shrink" Click="ShrinkButton_OnClick"/>
+    </Grid>
+</UserControl>
