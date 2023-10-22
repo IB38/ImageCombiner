@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:ImageCombiner.App.Views"
         mc:Ignorable="d" d:Width="800" d:Height="600"
         x:Class="ImageCombiner.App.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/logo.ico"
         ExtendClientAreaToDecorationsHint="True"
         Title="ImageCombiner.App">
         <views:MainView />

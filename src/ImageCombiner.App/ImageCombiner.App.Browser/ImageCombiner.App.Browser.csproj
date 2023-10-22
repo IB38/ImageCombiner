@@ -4,6 +4,7 @@
         <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
         <WasmMainJSPath>AppBundle\main.js</WasmMainJSPath>
         <OutputType>Exe</OutputType>
+        <ApplicationIcon>../ImageCombiner.App/Assets/logo.ico/</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
