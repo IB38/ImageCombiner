@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using DynamicData;
@@ -48,6 +50,8 @@ public partial class FileListControl : UserControl
         // Binding ListBox.ItemCount to HasFiles with coverter
         var itemCountProp = FileListBox.GetObservable(ListBox.ItemCountProperty, count => count > 0);
         itemCountProp.BindTo(this, c => c.HasFiles);
+        
+        FileListBox.AddHandler(DragDrop.DropEvent, OnFileDropped);
     }
 
     private async void AddButton_OnClick(object? sender, RoutedEventArgs e)
@@ -169,6 +173,43 @@ public partial class FileListControl : UserControl
         else
         {
             Console.WriteLine("Can't move file, file collection is empty");
+        }
+    }
+
+    private async void OnFileDropped(object? sender, DragEventArgs e)
+    {
+        if (e.Data.Contains(DataFormats.Files))
+        {
+            e.DragEffects = DragDropEffects.Copy;
+            
+            var storageItems = e.Data.GetFiles() ?? new List<IStorageItem>();
+
+            foreach (var item in storageItems)
+            {
+                switch (item)
+                {
+                    case IStorageFile storageFile:
+                        Console.WriteLine($"File '{storageFile.Name}' was dropped");
+                        ViewModel.Files.Add(storageFile);
+                        break;
+                    case IStorageFolder storageFolder:
+                        Console.WriteLine($"Folder '{storageFolder.Name}' was dropped");
+                        await foreach (var folderItem in storageFolder.GetItemsAsync())
+                        {
+                            // Only files within folder itself, not recursively
+                            if(folderItem is IStorageFile folderFile)
+                                ViewModel.Files.Add(folderFile);
+                        }
+
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+        else
+        {
+            e.DragEffects = DragDropEffects.None;
         }
     }
 }

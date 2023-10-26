@@ -12,7 +12,9 @@
     <Grid ShowGridLines="true" ColumnDefinitions="5*,1*">
       <ListBox Name="FileListBox" 
                Grid.Column="0" 
-               ItemsSource="{Binding Files, Mode=TwoWay}">
+               ItemsSource="{Binding Files, Mode=TwoWay}"
+               DragDrop.AllowDrop="True"
+               >
           <ListBox.ItemTemplate>
               <DataTemplate DataType="storage:IStorageFile">
                   <TextBlock Text="{Binding Name}"/>
