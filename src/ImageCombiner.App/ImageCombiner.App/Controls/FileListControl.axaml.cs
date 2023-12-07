@@ -51,6 +51,7 @@ public partial class FileListControl : UserControl
         var itemCountProp = FileListBox.GetObservable(ListBox.ItemCountProperty, count => count > 0);
         itemCountProp.BindTo(this, c => c.HasFiles);
         
+        FileListBox.AddHandler(DragDrop.DragOverEvent, OnFileDragged);
         FileListBox.AddHandler(DragDrop.DropEvent, OnFileDropped);
     }
 
@@ -176,6 +177,13 @@ public partial class FileListControl : UserControl
         }
     }
 
+    private async void OnFileDragged(object? sender, DragEventArgs e)
+    {
+        e.DragEffects = e.Data.Contains(DataFormats.Files) 
+            ? DragDropEffects.Copy 
+            : DragDropEffects.None;
+    }
+    
     private async void OnFileDropped(object? sender, DragEventArgs e)
     {
         if (e.Data.Contains(DataFormats.Files))
@@ -192,6 +200,7 @@ public partial class FileListControl : UserControl
                         Console.WriteLine($"File '{storageFile.Name}' was dropped");
                         ViewModel.Files.Add(storageFile);
                         break;
+                    
                     case IStorageFolder storageFolder:
                         Console.WriteLine($"Folder '{storageFolder.Name}' was dropped");
                         await foreach (var folderItem in storageFolder.GetItemsAsync())
@@ -200,10 +209,12 @@ public partial class FileListControl : UserControl
                             if(folderItem is IStorageFile folderFile)
                                 ViewModel.Files.Add(folderFile);
                         }
-
+                        storageFolder.Dispose();
                         break;
+                    
                     default:
-                        return;
+                        item.Dispose();
+                        break;
                 }
             }
         }
