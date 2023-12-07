@@ -66,6 +66,16 @@ public class ImageCombiner
                     combinationStrategy.ApplyImageOffset(img);
                 });
         }
+
+        var maxRes = input.MaxResolution;
+        if (maxRes > 0)
+        {
+            if(outputImage.Height > maxRes)
+                outputImage.Mutate(o => o.Resize(0, maxRes));
+            
+            if(outputImage.Width > maxRes)
+                outputImage.Mutate(o => o.Resize(maxRes, 0));
+        }
         
         await outputImage.SaveAsJpegAsync(outputStream, ct);
     }

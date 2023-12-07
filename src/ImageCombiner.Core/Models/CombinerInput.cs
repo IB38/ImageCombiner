@@ -11,6 +11,8 @@ public class CombinerInput
     public SizeMatchingType SizeMatchingType { get; init; } = SizeMatchingType.Disabled;
     
     public FramingOptions? FramingOptions { get; init; } = null;
+    
+    public int MaxResolution { get; init; }
 
     public CombinerInput(IFileProvider fileProvider)
     {
