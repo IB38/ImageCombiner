@@ -15,6 +15,13 @@ namespace ImageCombiner.App.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
+    public int MaxResolution 
+    {         
+        get => _maxResolution;
+        set => this.RaiseAndSetIfChanged(ref _maxResolution, value);
+    }
+
+    private int _maxResolution;
     private readonly Core.ImageCombiner _combiner = new();
 
     public async Task CombineAsync(IReadOnlyList<IStorageFile> inputFiles, 
@@ -34,7 +41,8 @@ public class MainViewModel : ViewModelBase
         {
             FramingOptions = fo,
             CombinationType = combinationType,
-            SizeMatchingType = sizeMatchingType
+            SizeMatchingType = sizeMatchingType,
+            MaxResolution = MaxResolution
         };
 
         await _combiner.CombineAsync(combinerInput, ct);

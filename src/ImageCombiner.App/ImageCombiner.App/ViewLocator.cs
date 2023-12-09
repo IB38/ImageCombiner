@@ -7,7 +7,7 @@ namespace ImageCombiner.App;
 
 public class ViewLocator : IDataTemplate
 {
-    public Control Build(object data)
+    public Control? Build(object? data)
     {
         if (data is null)
             return null;
@@ -16,9 +16,8 @@ public class ViewLocator : IDataTemplate
         var type = Type.GetType(name);
 
         if (type != null)
-        {
             return (Control)Activator.CreateInstance(type)!;
-        }
+        
 
         return new TextBlock { Text = name };
     }
