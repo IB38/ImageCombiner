@@ -14,6 +14,8 @@ public class CombinerInput
     
     public int MaxResolution { get; init; }
 
+    public int OutputJpegQuality { get; init; } = 95;
+
     public CombinerInput(IFileProvider fileProvider)
     {
         Code.NotNull(fileProvider, nameof(fileProvider));

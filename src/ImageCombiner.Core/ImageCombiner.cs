@@ -6,6 +6,7 @@ using ImageCombiner.Core.Infrastructure;
 using ImageCombiner.Core.Math;
 using ImageCombiner.Core.Models;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace ImageCombiner.Core;
 
@@ -76,7 +77,8 @@ public class ImageCombiner
             if(outputImage.Width > maxRes)
                 outputImage.Mutate(o => o.Resize(maxRes, 0));
         }
-        
-        await outputImage.SaveAsJpegAsync(outputStream, ct);
+
+        var encoder = new JpegEncoder() { Quality = input.OutputJpegQuality };
+        await outputImage.SaveAsJpegAsync(outputStream, encoder, ct);
     }
 }
